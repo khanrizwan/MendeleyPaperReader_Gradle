@@ -3,7 +3,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.util.Log;
-
 import com.mendeleypaperreader.contentProvider.MyContentProvider;
 import com.mendeleypaperreader.db.DatabaseOpenHelper;
 
