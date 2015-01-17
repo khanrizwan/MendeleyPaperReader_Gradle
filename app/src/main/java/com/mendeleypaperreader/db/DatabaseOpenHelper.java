@@ -172,7 +172,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
 
     final private static String DATABASE_NAME = "Mendeley_library.db";
-    final private static Integer VERSION = 6;
+    final private static Integer VERSION = 7;
     final private Context mContext;
 
     public DatabaseOpenHelper(Context context, String name,
@@ -213,7 +213,7 @@ public class DatabaseOpenHelper extends SQLiteOpenHelper {
 
         SessionManager session;
         session = new SessionManager(this.mContext);
-        session.savePreferences("versionCode", "9");
+        session.savePreferences("versionCode", "10");
 
 
         db.execSQL(CREATE_TABLE_GROUPS);
