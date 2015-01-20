@@ -33,3 +33,10 @@ Integration/Acceptance tests are written using calabash-android and can be found
 ##  Downloads
 
 [![Google Play](http://developer.android.com/images/brand/en_generic_rgb_wo_45.png)](https://play.google.com/store/apps/details?id=com.mendeleypaperreader)
+
+
+## About me
+
+Android developer on spare time.
+
+Welcome to [offer me a job](mailto:pdrolourenco@gmail.com). If you have any new idea about this project, feel free to [contact me](mailto:pdrolourenco@gmail.com). :smiley:

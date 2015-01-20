@@ -106,12 +106,15 @@ public class DocumentsDetailsActivity extends Activity {
         docNotes = new TextView(this);
         getDataBaseInformation = new GetDataBaseInformation(getApplicationContext());
 
+        
 
         docId = getDocId();
+        cursorDetails = getDataBaseInformation.getdocDetails(docId);
+        
 
         //Get to populate activity
-        fillData(getdocDetails());
-        getFile();
+        fillData(cursorDetails);
+        cursorFile = getDataBaseInformation.getFile();
 
         //Onlcick on abstract
         OnClickListener click_on_abstract = new OnClickListener() {
@@ -349,61 +352,7 @@ public class DocumentsDetailsActivity extends Activity {
     }
 
 
-    private Cursor getdocDetails() {
 
-        if (Globalconstant.LOG)
-            Log.d(Globalconstant.TAG, "getdocDetails - DOC_DETAILS");
-
-        String[] projection = new String[]{DatabaseOpenHelper.TYPE + " as _id", DatabaseOpenHelper.TITLE, DatabaseOpenHelper.AUTHORS, DatabaseOpenHelper.SOURCE, DatabaseOpenHelper.YEAR, DatabaseOpenHelper.VOLUME, DatabaseOpenHelper.PAGES, DatabaseOpenHelper.ISSUE, DatabaseOpenHelper.ABSTRACT, DatabaseOpenHelper.WEBSITE, DatabaseOpenHelper.DOI, DatabaseOpenHelper.PMID, DatabaseOpenHelper.ISSN, DatabaseOpenHelper.STARRED, DatabaseOpenHelper.READER_COUNT, DatabaseOpenHelper.IS_DOWNLOAD, DatabaseOpenHelper.TAGS};
-        String selection = DatabaseOpenHelper._ID + " = '" + docId + "'";
-        Uri uri = Uri.parse(MyContentProvider.CONTENT_URI_DOC_DETAILS + "/id");
-
-        cursorDetails = getApplicationContext().getContentResolver().query(uri, projection, selection, null, null);
-
-        return cursorDetails;
-
-    }
-
-
-    private String getdocNotes() {
-
-        if (Globalconstant.LOG)
-            Log.d(Globalconstant.TAG, "getdocDetails - DOC_NOTES");
-
-
-        String[] projection = new String[]{DatabaseOpenHelper.TEXT + " as _id"};
-        String selection = DatabaseOpenHelper.DOCUMENT_ID + " = '" + docId + "'";
-        Uri uri = Uri.parse(MyContentProvider.CONTENT_URI_DOC_NOTES + "/id");
-
-        Cursor cursorNotes = getApplicationContext().getContentResolver().query(uri, projection, selection, null, null);
-
-
-        if (cursorNotes.getCount() > 0) {
-            cursorNotes.moveToPosition(0);
-
-            return cursorNotes.getString(cursorNotes.getColumnIndex(DatabaseOpenHelper._ID));
-        }
-
-        return "";
-
-    }
-
-    private Cursor getFile() {
-        if (Globalconstant.LOG)
-            Log.d(Globalconstant.TAG, "getFile - DOC_DETAILS");
-
-
-        String[] projection = new String[]{DatabaseOpenHelper.FILE_ID + " as _id", DatabaseOpenHelper.FILE_NAME, DatabaseOpenHelper.FILE_MIME_TYPE};
-        String selection = DatabaseOpenHelper.FILE_DOC_ID + " = '" + docId + "'";
-        Uri uri = Uri.parse(MyContentProvider.CONTENT_URI_FILES + "/id");
-
-        cursorFile = getApplicationContext().getContentResolver().query(uri, projection, selection, null, null);
-        cursorFile.moveToPosition(0);
-
-
-        return cursorFile;
-
-    }
 
 
 
@@ -614,7 +563,7 @@ public class DocumentsDetailsActivity extends Activity {
         relativeLayout.addView(doc_note_title);
 
 
-        notes = getdocNotes();
+        notes = getDataBaseInformation.getDocNotes(docId);
         docNotes.setId(14);
         docNotes.setBackgroundColor(Color.WHITE);
         docNotes.setMinLines(1);

@@ -27,6 +27,7 @@ import android.widget.TextView;
 import com.mendeleypaperreader.R;
 import com.mendeleypaperreader.contentProvider.MyContentProvider;
 import com.mendeleypaperreader.db.DatabaseOpenHelper;
+import com.mendeleypaperreader.utl.GetDataBaseInformation;
 import com.mendeleypaperreader.utl.Globalconstant;
 
 /**
@@ -230,7 +231,9 @@ public class MainMenuActivityFragmentDetails extends ListFragment implements Loa
         String title = c.getString(c.getColumnIndex("_id"));
 
         //cursor with Folders information
-        Cursor c1 = getDocId(title);
+        GetDataBaseInformation getDataBaseInformation= new GetDataBaseInformation(getActivity().getApplicationContext());
+
+        Cursor c1 = getDataBaseInformation.getDocId(title);
         c1.moveToPosition(0);
         String doc_id = c1.getString(c1.getColumnIndex(DatabaseOpenHelper._ID));
 
@@ -245,20 +248,6 @@ public class MainMenuActivityFragmentDetails extends ListFragment implements Loa
 
     }
 
-
-    private Cursor getDocId(String doc_title) {
-
-        String[] projection = new String[]{DatabaseOpenHelper._ID};
-
-        if (doc_title.contains("'")) {
-            doc_title = doc_title.replaceAll("'", "''");
-        }
-
-        String selection = DatabaseOpenHelper.TITLE + " = '" + doc_title + "'";
-        Uri uri = Uri.parse(MyContentProvider.CONTENT_URI_DOC_DETAILS + "/id");
-
-        return getActivity().getApplicationContext().getContentResolver().query(uri, projection, selection, null, null);
-    }
 
 
     public void onResume() {
